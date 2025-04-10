@@ -1,9 +1,7 @@
 package net.modificationstation.stationapi.impl.client.arsenic.renderer.render;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.primitives.Ints;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.block.Block;
 import net.minecraft.class_454;
 import net.minecraft.class_583;
 import net.minecraft.client.Minecraft;
@@ -22,8 +20,6 @@ import net.modificationstation.stationapi.api.client.render.StateManager;
 import net.modificationstation.stationapi.api.client.render.VertexConsumer;
 import net.modificationstation.stationapi.api.client.render.item.ItemModels;
 import net.modificationstation.stationapi.api.client.render.model.*;
-import net.modificationstation.stationapi.api.client.render.model.json.ModelTransformation;
-import net.modificationstation.stationapi.api.client.render.model.json.Transformation;
 import net.modificationstation.stationapi.api.client.texture.StationTextureManager;
 import net.modificationstation.stationapi.api.client.texture.atlas.Atlases;
 import net.modificationstation.stationapi.api.registry.ItemRegistry;
@@ -34,15 +30,11 @@ import net.modificationstation.stationapi.api.util.crash.CrashReport;
 import net.modificationstation.stationapi.api.util.crash.CrashReportSection;
 import net.modificationstation.stationapi.api.util.exception.CrashReportSectionBlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
-import net.modificationstation.stationapi.api.util.math.MathHelper;
-import net.modificationstation.stationapi.api.util.math.MatrixStack;
 import net.modificationstation.stationapi.impl.client.arsenic.renderer.aocalc.LightingCalculatorImpl;
 import org.jetbrains.annotations.Nullable;
 
 import java.nio.ByteOrder;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class BakedModelRendererImpl implements BakedModelRenderer {
@@ -55,14 +47,17 @@ public class BakedModelRendererImpl implements BakedModelRenderer {
     private final Tessellator tessellator = Tessellator.INSTANCE;
     private final LightingCalculatorImpl light = new LightingCalculatorImpl(3);
     private final Random random = new Random();
-    private final ItemModels itemModels = Util.make(new ItemModels(StationRenderAPI.getBakedModelManager()), models -> {
-        for (Identifier id : ItemRegistry.INSTANCE.getIds())
-            models.putModel(ItemRegistry.INSTANCE.get(id), ModelIdentifier.of(id, "inventory"));
-        models.reloadModels();
-    });
+
     private final BlockColors blockColors = StationRenderAPI.getBlockColors();
     private final ItemColors itemColors = StationRenderAPI.getItemColors();
     private boolean damage;
+
+    public BakedModelRendererImpl() {
+        ItemModels models = StationRenderAPI.getItemModels();
+        for (Identifier id : ItemRegistry.INSTANCE.getIds())
+            models.putModel(ItemRegistry.INSTANCE.get(id), ModelIdentifier.of(id, "inventory"));
+        models.reloadModels();
+    }
 
     @Override
     public boolean renderBlock(VertexConsumer consumer, BlockState state, BlockPos pos, BlockView world, boolean cull, Random random) {
@@ -128,37 +123,6 @@ public class BakedModelRendererImpl implements BakedModelRenderer {
         damage = false;
     }
 
-    private void renderQuad(MatrixStack.Entry entry, VertexConsumer consumer, BlockView world, BlockState state, BlockPos pos, BakedQuad quad, float[] brightness) {
-        if (quad.hasTint()) {
-            int i = blockColors.getColor(state, world, pos, quad.tintIndex());
-            float
-                    r = redI2F(i),
-                    g = greenI2F(i),
-                    b = blueI2F(i);
-            tessellator.quad(quad, pos.x, pos.y, pos.z,
-                    colorF2I(r * brightness[0], g * brightness[0], b * brightness[0]),
-                    colorF2I(r * brightness[1], g * brightness[1], b * brightness[1]),
-                    colorF2I(r * brightness[2], g * brightness[2], b * brightness[2]),
-                    colorF2I(r * brightness[3], g * brightness[3], b * brightness[3]),
-                    0, 0, 0,
-                    damage
-            );
-        } else
-            tessellator.quad(quad, pos.x, pos.y, pos.z,
-                    colorF2I(brightness[0], brightness[0], brightness[0]),
-                    colorF2I(brightness[1], brightness[1], brightness[1]),
-                    colorF2I(brightness[2], brightness[2], brightness[2]),
-                    colorF2I(brightness[3], brightness[3], brightness[3]),
-                    0, 0, 0,
-                    damage
-            );
-    }
-
-    @Override
-    public ItemModels getItemModels() {
-        return this.itemModels;
-    }
-
     private void renderBakedItemModel(BakedModel model, ItemStack stack, float brightness) {
         ItemRenderContext context = ItemRenderContext.POOL.get();
         context.renderItem(Tessellator.INSTANCE, stack, model, random, brightness);
@@ -207,17 +171,6 @@ public class BakedModelRendererImpl implements BakedModelRenderer {
             renderBakedItemModelFlat(model, stack, brightness);
         else
             renderBakedItemModel(model, stack, brightness);
-    }
-
-    private void renderBakedItemQuads(List<BakedQuad> quads, ItemStack stack, float brightness) {
-        boolean bl = stack != null && stack.itemId != 0 && stack.count > 0;
-        for (BakedQuad bakedQuad : quads) {
-            int i = bl && bakedQuad.hasTint() ? this.itemColors.getColor(stack, bakedQuad.tintIndex()) : -1;
-            float light = MathHelper.lerp(bakedQuad.lightEmission(), brightness, 1F);
-            i = colorF2I(redI2F(i) * light, greenI2F(i) * light, blueI2F(i) * light);
-            Direction face = bakedQuad.face();
-            tessellator.quad(bakedQuad, 0, 0, 0, i, i, i, i, face.getOffsetX(), face.getOffsetY(), face.getOffsetZ(), false);
-        }
     }
 
     @Override

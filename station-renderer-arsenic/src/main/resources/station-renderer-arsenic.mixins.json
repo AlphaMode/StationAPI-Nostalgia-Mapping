@@ -32,6 +32,7 @@
     "client.block.RailRendererMixin",
     "client.block.RedstoneDustRendererMixin",
     "client.block.RepeaterRendererMixin",
+    "client.block.TextureRendererMixin",
     "client.block.TorchRendererMixin",
     "client.block.entity.PistonBlockEntityRenderer",
     "client.entity.EntityRendererMixin",

@@ -113,8 +113,4 @@ public interface VertexConsumer {
         Vector3f normal = entry.transformNormal(faceNormal, new Vector3f());
         return this;
     }
-
-    default void quad(BakedQuad quad, float x, float y, float z, int colour0, int colour1, int colour2, int colour3, float normalX, float normalY, float normalZ, boolean spreadUV) {
-        Util.assertImpl();
-    }
 }

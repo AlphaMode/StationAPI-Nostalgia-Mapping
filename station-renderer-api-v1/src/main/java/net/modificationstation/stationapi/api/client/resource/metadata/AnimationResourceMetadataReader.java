@@ -18,35 +18,35 @@ public class AnimationResourceMetadataReader
 implements ResourceMetadataReader<AnimationResourceMetadata> {
     @Override
     public AnimationResourceMetadata fromJson(JsonObject jsonObject) {
-        List<AnimationFrameResourceMetadata> list = new ArrayList<>();
-        int i = JsonHelper.getInt(jsonObject, "frametime", 1);
-        if (i != 1) {
-            Validate.inclusiveBetween(1L, Integer.MAX_VALUE, i, "Invalid default frame time");
+        List<AnimationFrameResourceMetadata> frames = new ArrayList<>();
+        int frametime = JsonHelper.getInt(jsonObject, "frametime", 1);
+        if (frametime != 1) {
+            Validate.inclusiveBetween(1L, Integer.MAX_VALUE, frametime, "Invalid default frame time");
         }
         if (jsonObject.has("frames")) {
             try {
-                JsonArray jsonArray = JsonHelper.getArray(jsonObject, "frames");
-                for (int j = 0; j < jsonArray.size(); ++j) {
-                    JsonElement jsonElement = jsonArray.get(j);
-                    AnimationFrameResourceMetadata animationFrameResourceMetadata = this.readFrameMetadata(j, jsonElement);
-                    if (animationFrameResourceMetadata == null) continue;
-                    list.add(animationFrameResourceMetadata);
+                JsonArray frameElements = JsonHelper.getArray(jsonObject, "frames");
+                for (int i = 0; i < frameElements.size(); ++i) {
+                    JsonElement frameElement = frameElements.get(i);
+                    AnimationFrameResourceMetadata frame = this.readFrameMetadata(i, frameElement);
+                    if (frame == null) continue;
+                    frames.add(frame);
                 }
             }
             catch (ClassCastException classCastException) {
                 throw new JsonParseException("Invalid animation->frames: expected array, was " + jsonObject.get("frames"), classCastException);
             }
         }
-        int k = JsonHelper.getInt(jsonObject, "width", -1);
-        int l = JsonHelper.getInt(jsonObject, "height", -1);
-        if (k != -1) {
-            Validate.inclusiveBetween(1L, Integer.MAX_VALUE, k, "Invalid width");
+        int width = JsonHelper.getInt(jsonObject, "width", -1);
+        int height = JsonHelper.getInt(jsonObject, "height", -1);
+        if (width != -1) {
+            Validate.inclusiveBetween(1L, Integer.MAX_VALUE, width, "Invalid width");
         }
-        if (l != -1) {
-            Validate.inclusiveBetween(1L, Integer.MAX_VALUE, l, "Invalid height");
+        if (height != -1) {
+            Validate.inclusiveBetween(1L, Integer.MAX_VALUE, height, "Invalid height");
         }
-        boolean bl = JsonHelper.getBoolean(jsonObject, "interpolate", false);
-        return new AnimationResourceMetadata(list, k, l, i, bl);
+        boolean interpolate = JsonHelper.getBoolean(jsonObject, "interpolate", false);
+        return new AnimationResourceMetadata(frames, width, height, frametime, interpolate);
     }
 
     private AnimationFrameResourceMetadata readFrameMetadata(int frame, JsonElement json) {
@@ -55,13 +55,13 @@ implements ResourceMetadataReader<AnimationResourceMetadata> {
         }
         if (json.isJsonObject()) {
             JsonObject jsonObject = JsonHelper.asObject(json, "frames[" + frame + "]");
-            int i = JsonHelper.getInt(jsonObject, "time", -1);
+            int time = JsonHelper.getInt(jsonObject, "time", -1);
             if (jsonObject.has("time")) {
-                Validate.inclusiveBetween(1L, Integer.MAX_VALUE, i, "Invalid frame time");
+                Validate.inclusiveBetween(1L, Integer.MAX_VALUE, time, "Invalid frame time");
             }
-            int j = JsonHelper.getInt(jsonObject, "index");
-            Validate.inclusiveBetween(0L, Integer.MAX_VALUE, j, "Invalid frame index");
-            return new AnimationFrameResourceMetadata(j, i);
+            int index = JsonHelper.getInt(jsonObject, "index");
+            Validate.inclusiveBetween(0L, Integer.MAX_VALUE, index, "Invalid frame index");
+            return new AnimationFrameResourceMetadata(index, time);
         }
         return null;
     }

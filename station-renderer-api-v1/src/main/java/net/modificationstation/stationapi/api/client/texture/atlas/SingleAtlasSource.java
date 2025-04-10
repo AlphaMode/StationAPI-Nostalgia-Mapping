@@ -8,7 +8,7 @@ import net.modificationstation.stationapi.api.resource.ResourceManager;
 
 import java.util.Optional;
 
-import static net.modificationstation.stationapi.impl.client.texture.StationRenderImpl.LOGGER;
+import static net.modificationstation.stationapi.impl.client.render.RendererManager.LOGGER;
 
 public record SingleAtlasSource(Identifier resourceId, Optional<Identifier> spriteId) implements AtlasSource {
     public static final MapCodec<SingleAtlasSource> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(Identifier.CODEC.fieldOf("resource").forGetter(singleAtlasSource -> singleAtlasSource.resourceId), Identifier.CODEC.optionalFieldOf("sprite").forGetter(singleAtlasSource -> singleAtlasSource.spriteId)).apply(instance, SingleAtlasSource::new));

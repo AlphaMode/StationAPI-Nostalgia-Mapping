@@ -1,6 +1,5 @@
 package net.modificationstation.stationapi.api.client.render;
 
-import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.modificationstation.stationapi.api.block.BlockState;

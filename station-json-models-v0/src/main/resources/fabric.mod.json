@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "station-json-models-v1",
+  "version": "${version}",
+
+  "name": "Station Json Models (v0)",
+  "description": "Adds json model loading",
+  "authors": [
+    "Modification Station"
+  ],
+  "contact": {
+    "homepage": "https://glass-launcher.net/repo/mod/stationapi",
+    "sources": "https://github.com/ModificationStation/StationAPI",
+    "issues": "https://github.com/ModificationStation/StationAPI/issues"
+  },
+
+  "license": "MIT",
+  "icon": "assets/station-json-models-v0/icon.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "stationapi:event_bus_client": [
+      "net.modificationstation.stationapi.impl.client.texture.StationRenderImpl"
+    ]
+  },
+
+  "depends": {
+    "fabricloader": "*",
+    "minecraft": "1.0.0-beta.7.3"
+  },
+
+  "custom": {
+    "modmenu:api": true
+  }
+}

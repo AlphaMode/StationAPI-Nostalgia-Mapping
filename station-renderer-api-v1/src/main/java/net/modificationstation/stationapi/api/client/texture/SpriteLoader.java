@@ -20,7 +20,7 @@ import java.util.concurrent.Executor;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static net.modificationstation.stationapi.impl.client.texture.StationRenderImpl.LOGGER;
+import static net.modificationstation.stationapi.impl.client.render.RendererManager.LOGGER;
 
 public class SpriteLoader {
     private final Identifier id;

@@ -22,7 +22,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import static net.modificationstation.stationapi.api.StationAPI.NAMESPACE;
-import static net.modificationstation.stationapi.impl.client.texture.StationRenderImpl.LOGGER;
+import static net.modificationstation.stationapi.impl.client.render.RendererManager.LOGGER;
 
 public class AtlasLoader {
     private static final ResourceFinder FINDER = new ResourceFinder(NAMESPACE + "/atlases", ".json");

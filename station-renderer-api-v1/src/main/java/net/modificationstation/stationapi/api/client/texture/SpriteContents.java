@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static net.modificationstation.stationapi.impl.client.texture.StationRenderImpl.LOGGER;
+import static net.modificationstation.stationapi.impl.client.render.RendererManager.LOGGER;
 
 public class SpriteContents implements TextureStitcher.Stitchable, AutoCloseable {
     private final Identifier id;

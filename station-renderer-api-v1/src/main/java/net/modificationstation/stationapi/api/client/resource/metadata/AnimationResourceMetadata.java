@@ -53,8 +53,8 @@ public class AnimationResourceMetadata {
     }
 
     public void forEachFrame(FrameConsumer consumer) {
-        for (AnimationFrameResourceMetadata animationFrameResourceMetadata : this.frames)
-            consumer.accept(animationFrameResourceMetadata.getIndex(), animationFrameResourceMetadata.getTime(this.defaultFrameTime));
+        for (AnimationFrameResourceMetadata frame : this.frames)
+            consumer.accept(frame.getIndex(), frame.getTime(this.defaultFrameTime));
     }
 
     @FunctionalInterface

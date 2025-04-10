@@ -1,8 +1,15 @@
 package net.modificationstation.stationapi.impl.client.render;
 
 import net.modificationstation.stationapi.api.client.render.Renderer;
+import net.modificationstation.stationapi.api.util.Namespace;
+import org.apache.logging.log4j.Logger;
 
 public class RendererManager {
+    // Just gonna stick this here :P
+    public static final Namespace NAMESPACE = Namespace.resolve();
+
+    public static final Logger LOGGER = NAMESPACE.getLogger("StationRenderer|API");
+
     private static Renderer activeRenderer;
 
     public static void registerRenderer(Renderer renderer) {

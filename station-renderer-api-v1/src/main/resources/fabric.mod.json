@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "station-renderer-api-v0",
+  "id": "station-renderer-api-v1",
   "version": "${version}",
 
   "name": "Station Renderer API (v0)",
@@ -15,17 +15,12 @@
   },
 
   "license": "MIT",
-  "icon": "assets/station-renderer-api-v0/icon.png",
+  "icon": "assets/station-renderer-api-v1/icon.png",
 
   "environment": "client",
   "accessWidener" : "station-renderer-api-v1.accesswidener",
-  "entrypoints": {
-    "stationapi:event_bus_client": [
-      "net.modificationstation.stationapi.impl.client.texture.StationRenderImpl"
-    ]
-  },
   "mixins": [
-    "station-renderer-api-v0.mixins.json"
+    "station-renderer-api-v1.mixins.json"
   ],
 
   "depends": {

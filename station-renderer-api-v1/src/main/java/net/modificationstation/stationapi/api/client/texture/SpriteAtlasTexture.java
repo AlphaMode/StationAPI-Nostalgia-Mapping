@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static net.modificationstation.stationapi.impl.client.texture.StationRenderImpl.LOGGER;
+import static net.modificationstation.stationapi.impl.client.render.RendererManager.LOGGER;
 
 public class SpriteAtlasTexture extends AbstractTexture implements DynamicTexture, TextureTickListener {
     private List<SpriteContents> spritesToLoad = List.of();

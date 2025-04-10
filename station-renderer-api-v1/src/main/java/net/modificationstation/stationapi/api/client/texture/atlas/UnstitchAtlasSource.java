@@ -17,7 +17,7 @@ import net.modificationstation.stationapi.api.util.dynamic.Codecs;
 import java.util.List;
 import java.util.Optional;
 
-import static net.modificationstation.stationapi.impl.client.texture.StationRenderImpl.LOGGER;
+import static net.modificationstation.stationapi.impl.client.render.RendererManager.LOGGER;
 
 public record UnstitchAtlasSource(Identifier resource, List<Region> regions, double divisorX, double divisorY) implements AtlasSource {
     public static final MapCodec<UnstitchAtlasSource> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(

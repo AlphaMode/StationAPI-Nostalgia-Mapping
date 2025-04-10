@@ -1,8 +1,6 @@
 package net.modificationstation.stationapi.api.client.render.model;
 
 import net.modificationstation.stationapi.api.client.render.mesh.QuadEmitter;
-import net.modificationstation.stationapi.api.client.render.model.json.ModelOverrideList;
-import net.modificationstation.stationapi.api.client.render.model.json.ModelTransformation;
 import net.modificationstation.stationapi.api.client.texture.Sprite;
 
 /**

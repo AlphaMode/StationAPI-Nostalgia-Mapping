@@ -103,12 +103,6 @@ public class DelegatingTessellator extends Tessellator {
     }
 
     @Override
-    public void quad(BakedQuad quad, float x, float y, float z, int colour0, int colour1, int colour2, int colour3, float normalX, float normalY, float normalZ, boolean spreadUV) {
-        if (this.delegate instanceof StationTessellator t)
-            t.quad(quad, x, y, z, colour0, colour1, colour2, colour3, normalX, normalY, normalZ, spreadUV);
-    }
-
-    @Override
     public void ensureBufferCapacity(int criticalCapacity) {
         if (this.delegate instanceof StationTessellator t)
             t.ensureBufferCapacity(criticalCapacity);

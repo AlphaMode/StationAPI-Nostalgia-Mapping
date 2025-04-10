@@ -18,12 +18,6 @@ class TessellatorMixin implements StationTessellator, VertexConsumer {
 
     @Override
     @Unique
-    public void quad(BakedQuad quad, float x, float y, float z, int colour0, int colour1, int colour2, int colour3, float normalX, float normalY, float normalZ, boolean spreadUV) {
-        stationapi$stationTessellatorImpl.quad(quad, x, y, z, colour0, colour1, colour2, colour3, normalX, normalY, normalZ, spreadUV);
-    }
-
-    @Override
-    @Unique
     public void ensureBufferCapacity(int criticalCapacity) {
         stationapi$stationTessellatorImpl.ensureBufferCapacity(criticalCapacity);
     }
